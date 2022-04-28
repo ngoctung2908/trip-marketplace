@@ -6,19 +6,24 @@ import { App } from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import reportWebVitals from './reportWebVitals'
+import { Web3ReactProvider } from '@web3-react/core'
+import { getLibrary } from 'utils/web3React'
 import './index.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-        <ToastContainer />
-      </BrowserRouter>
-    </Provider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+          <ToastContainer />
+        </BrowserRouter>
+      </Provider>
+    </Web3ReactProvider>
   </React.StrictMode>
 )
 
