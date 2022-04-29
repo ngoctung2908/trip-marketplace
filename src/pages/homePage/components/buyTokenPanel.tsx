@@ -100,7 +100,12 @@ const BuyTokenPanel = ({ pid, poolInfo, account }) => {
       </div>
       <p className="text-white text-sm">Min amount: {toNormalNumber(poolInfo.minAmount)} ONETRIP</p>
       <div className="text-right mt-5">
-        {!pendingTx ? (
+        {!account && (
+          <button className="px-8 py-1 rounded transition-all bg-gray-100 hover:bg-gray-300">
+            Connect Wallet
+          </button>
+        )}
+        {!pendingTx && account && (
           <button
             className={`px-8 py-1 rounded transition-all ${
               isValid ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-100 hover:bg-gray-300'
@@ -109,7 +114,8 @@ const BuyTokenPanel = ({ pid, poolInfo, account }) => {
           >
             Buy
           </button>
-        ) : (
+        )}
+        {pendingTx && (
           <button
             type="button"
             className="ml-auto flex items-center justify-center py-1 px-5 rounded text-gray-700 pointer-events-none bg-gray-400 transition ease-in-out duration-150 cursor-not-allowed"

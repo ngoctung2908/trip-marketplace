@@ -21,15 +21,12 @@ export const HomePage = () => {
         setPoolInfo(pool)
       }
     }
-
-    if (account) {
-      getPoolInfo()
-    }
+    getPoolInfo()
 
     return () => {
       isMounted = false
     }
-  }, [privateSaleContract, account])
+  }, [privateSaleContract])
 
   return (
     poolInfo && (
