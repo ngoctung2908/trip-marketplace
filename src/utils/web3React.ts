@@ -9,8 +9,8 @@ const chainId = parseInt(process.env.REACT_APP_CHAIN_ID || '1666700000', 10)
 
 const walletconnect = new WalletConnectConnector({
   rpc: { [chainId]: rpcUrl },
-  bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
+  supportedChainIds: [chainId],
 })
 
 const bscConnector = new BscConnector({ supportedChainIds: [chainId] })

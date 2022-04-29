@@ -1,8 +1,4 @@
-import { Fragment } from 'react'
-
-import { useWeb3React } from '@web3-react/core'
 import { connectors } from 'utils/web3React'
-
 import useAuth from 'hooks/useAuth'
 import Modal from '../modal'
 import bscSvg from 'assets/img/bsc.svg'
@@ -16,11 +12,12 @@ type WalletModalProps = {
 
 export const WalletModal = (props: WalletModalProps) => {
   const { open, onClose } = props
-  const { activate } = useWeb3React()
   const { login } = useAuth()
+
   const setProvider = (type) => {
     window.localStorage.setItem('provider', type)
   }
+
   return (
     <Modal open={open} onClose={onClose}>
       <>

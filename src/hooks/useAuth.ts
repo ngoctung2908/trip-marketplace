@@ -9,19 +9,18 @@ import {
   UserRejectedRequestError as UserRejectedRequestErrorWalletConnect,
   WalletConnectConnector,
 } from '@web3-react/walletconnect-connector'
-import { connectors } from 'utils/web3React'
-import { useAppDispatch } from 'store/hooks'
 import { toast } from 'react-toastify'
 import { setupNetwork } from 'utils/wallet'
+import { connectors } from 'utils/web3React'
 
 const useAuth = () => {
-  const dispatch = useAppDispatch()
-  const { chainId, activate, deactivate } = useWeb3React()
+  const { activate, deactivate } = useWeb3React()
 
   const login = useCallback(
     (connector) => {
       if (connector) {
         // connector.handleAccountsChanged = () => localStorage.removeItem('token')
+        console.log(connector)
         activate(connector, async (error: Error) => {
           if (error instanceof UnsupportedChainIdError) {
             const hasSetup = await setupNetwork()
@@ -65,22 +64,17 @@ const useAuth = () => {
     [activate]
   )
 
-  // const logout = useCallback(() => {
-  //   dispatch(profileClear())
-  //   dispatch(resetUserNftState())
-  //   deactivate()
-  //   // This localStorage key is set by @web3-react/walletconnect-connector
-  //   if (window.localStorage.getItem('walletconnect')) {
-  //     connectorsByName.walletconnect.close()
-  //     connectorsByName.walletconnect.walletConnectProvider = null
-  //   }
-  //   window.localStorage.removeItem(connectorLocalStorageKey)
-  //   if (chainId) {
-  //     dispatch(clearAllTransactions({ chainId }))
-  //   }
-  // }, [deactivate, dispatch, chainId])
+  const logout = useCallback(() => {
+    deactivate()
+    // This localStorage key is set by @web3-react/walletconnect-connector
+    if (window.localStorage.getItem('walletconnect')) {
+      connectors.walletConnect.close()
+      connectors.walletConnect.walletConnectProvider = null
+    }
+    window.localStorage.removeItem('provider')
+  }, [deactivate])
 
-  return { login }
+  return { login, logout }
 }
 
 export default useAuth
