@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
 import { Popover } from '@headlessui/react'
 import truncateHash from 'utils/truncateHash'
-import { useEffect } from 'react'
 import useAuth from 'hooks/useAuth'
 
 type HeaderProps = {

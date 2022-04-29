@@ -10,9 +10,9 @@ export const getContract = (
   library: Web3Provider,
   account?: string
 ): Contract => {
-  //   if (!isAddress(address) || address === AddressZero) {
-  //     throw Error(`Invalid 'address' parameter '${address}'.`)
-  //   }
+  if (!isAddress(address) || address === AddressZero) {
+    throw Error(`Invalid 'address' parameter '${address}'.`)
+  }
 
   return new Contract(address, ABI, getProviderOrSigner(library, account) as any)
 }

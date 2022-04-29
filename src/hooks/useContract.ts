@@ -3,6 +3,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import addresses from 'config/constants/contracts'
 import privateSaleAbi from 'config/abi/privateSale.json'
 import oneTripAbi from 'config/abi/oneTrip.json'
+import oneUsdtAbi from 'config/abi/oneUsdt.json'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
@@ -38,4 +39,8 @@ export const usePrivateSaleContract = (): Contract | null => {
 
 export const useOneTripContract = (): Contract | null => {
   return useContract(getContractAddress(addresses.oneTrip), oneTripAbi, true)
+}
+
+export const useOneUsdtContract = (): Contract | null => {
+  return useContract(getContractAddress(addresses.oneUsdt), oneUsdtAbi, true)
 }
