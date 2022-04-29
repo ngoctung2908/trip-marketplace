@@ -19,8 +19,7 @@ const useAuth = () => {
   const { chainId, activate, deactivate } = useWeb3React()
 
   const login = useCallback(
-    (connectorID) => {
-      const connector = connectors[connectorID]
+    (connector) => {
       if (connector) {
         // connector.handleAccountsChanged = () => localStorage.removeItem('token')
         activate(connector, async (error: Error) => {

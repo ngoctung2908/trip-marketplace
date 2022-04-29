@@ -30,6 +30,7 @@ export const WalletModal = (props: WalletModalProps) => {
             <button
               onClick={() => {
                 login(connectors.bscWallet)
+                setProvider('bscWallet')
                 onClose(false)
               }}
               className="flex items-center gap-x-2 border-gray-300 border shadow-sm rounded-md w-full justify-center py-1 text-gray-700 hover:bg-gray-50 font-medium"
@@ -39,6 +40,7 @@ export const WalletModal = (props: WalletModalProps) => {
             <button
               onClick={() => {
                 login(connectors.walletConnect)
+                setProvider('walletConnect')
                 onClose(false)
               }}
               className="flex items-center gap-x-2 border-gray-300 border shadow-sm rounded-md w-full justify-center py-1 text-gray-700 hover:bg-gray-50 font-medium"
@@ -48,6 +50,7 @@ export const WalletModal = (props: WalletModalProps) => {
             <button
               onClick={() => {
                 login(connectors.injected)
+                setProvider('injected')
                 onClose(false)
               }}
               className="flex items-center gap-x-2 border-gray-300 border shadow-sm rounded-md w-full justify-center py-1 text-gray-700 hover:bg-gray-50 font-medium"

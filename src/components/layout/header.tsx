@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useWeb3React } from '@web3-react/core'
+import truncateHash from 'utils/truncateHash'
 
 type HeaderProps = {
   onOpen: (value: boolean) => void
@@ -6,6 +8,7 @@ type HeaderProps = {
 
 const Header = (props: HeaderProps) => {
   const { onOpen } = props
+  const { account } = useWeb3React()
   return (
     <div className="px-5 py-3 bg-sky-900 flex justify-between items-center">
       <Link to="" className="text-2xl text-white font-bold">
@@ -17,12 +20,16 @@ const Header = (props: HeaderProps) => {
         <li className="text-white font-semibold flex items-center">About</li>
         <li className="text-white font-semibold flex items-center">Contact</li>
         <li>
-          <button
-            onClick={() => onOpen(true)}
-            className="bg-teal-600 text-white rounded px-5 py-1 font-semibold"
-          >
-            Connect wallet
-          </button>
+          {account ? (
+            <span className="text-white font-semibold">{truncateHash(account, 8, 4)}</span>
+          ) : (
+            <button
+              onClick={() => onOpen(true)}
+              className="bg-teal-600 text-white rounded px-5 py-1 font-semibold"
+            >
+              Connect wallet
+            </button>
+          )}
         </li>
       </ul>
     </div>
