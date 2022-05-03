@@ -30,13 +30,11 @@ export const HomePage = () => {
 
   return (
     poolInfo && (
-      <div className="p-5">
+      <div className="md:p-5">
         <PoolInfo poolInfo={poolInfo} />
-        <div className="mt-5">
+        <div className="mt-5 flex flex-col gap-y-8 md:flex-row md:justify-center md:gap-y-0 md:gap-x-8">
           <BuyTokenPanel pid={PID} poolInfo={poolInfo} account={account} />
-        </div>
-        <div className="mt-5">
-          <UserInfo pid={PID} account={account} />
+          {account && <UserInfo pid={PID} account={account} />}
         </div>
       </div>
     )

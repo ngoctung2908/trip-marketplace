@@ -1,22 +1,28 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { usePrivateSaleContract } from 'hooks/useContract'
-import toNormalNumber from 'utils/toNormalNumber'
+import { useDispatch } from 'react-redux'
+import { fetchUserBalance } from '../../homePage/userSlice'
+import { AppDispatch } from 'store/store'
+import { useSelector } from 'react-redux'
+import { RootState } from 'store/store'
 
 const UserInfo = ({ pid, account }) => {
-  const [balance, setBalance] = useState('0')
-  const privateContract = usePrivateSaleContract()
+  const privateSaleContract = usePrivateSaleContract()
+  const dispatch = useDispatch<AppDispatch>()
+  const balance = useSelector((state: RootState) => state.user.value)
 
   useEffect(() => {
-    const getUserBalance = async () => {
-      const val = await privateContract.userBuy(account, pid)
-      setBalance(toNormalNumber(val))
-    }
     if (account) {
-      getUserBalance()
+      dispatch(fetchUserBalance({ account, pid, contract: privateSaleContract }))
     }
-  }, [account, privateContract])
+  }, [account, dispatch, privateSaleContract, pid])
 
-  return account && <p className="text-center text-gray-700">Your balance: {balance} ONETRIP</p>
+  return (
+    <div className="md:w-1/2 bg-sky-900 rounded p-5">
+      <p className="text-white">Your balance: {balance} ONETRIP</p>
+      <p className="text-white">Claimed: 0/5000 ONETRIP</p>
+    </div>
+  )
 }
 
 export default UserInfo

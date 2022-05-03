@@ -1,71 +1,76 @@
 import { connectors } from 'utils/web3React'
 import useAuth from 'hooks/useAuth'
 import Modal from '../modal'
-import bscSvg from 'assets/img/bsc.svg'
-import metamaskSvg from 'assets/img/metamask.svg'
-import walletConnectSvg from 'assets/img/wallet-connect.svg'
+import { useDispatch } from 'react-redux'
+import { close } from '../walletModal/walletModalSlice'
+
+import circleMetamaskSvg from 'assets/img/circle-metamask.svg'
+import circleBscSvg from 'assets/img/circle-bsc.svg'
+import circleMathWalletkSvg from 'assets/img/circle-mathwallet.svg'
+import circleSafepalSvg from 'assets/img/circle-safepal.svg'
+import circleTrustWalletSvg from 'assets/img/circle-trustwallet.svg'
+import circleWalletConnectSvg from 'assets/img/circle-walletconnect.svg'
+import circleTokenpocketSvg from 'assets/img/circle-tokenpocket.svg'
 
 type WalletModalProps = {
   open: boolean
-  onClose: (value: boolean) => void
 }
 
+const WALLETS = [
+  { name: 'Metamask', icon: circleMetamaskSvg, provider: 'injected' },
+  { name: 'WalletConnect', icon: circleWalletConnectSvg, provider: 'walletConnect' },
+  { name: 'Binance Chain Wallet', icon: circleBscSvg, provider: 'bscWallet' },
+  { name: 'TrustWallet', icon: circleTrustWalletSvg, provider: 'injected' },
+  { name: 'MathWallet', icon: circleMathWalletkSvg, provider: 'injected' },
+  { name: 'TokenPocket', icon: circleTokenpocketSvg, provider: 'injected' },
+  { name: 'Safepal Wallet', icon: circleSafepalSvg, provider: 'injected' },
+]
+
 export const WalletModal = (props: WalletModalProps) => {
-  const { open, onClose } = props
+  const { open } = props
   const { login } = useAuth()
+  const dispatch = useDispatch()
 
   const setProvider = (type) => {
     window.localStorage.setItem('provider', type)
   }
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <>
-        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <h6 className="text-gray-700 font-semibold text-xl">Select wallet</h6>
-          <div className="flex flex-col gap-y-4 sm:items-start mt-5">
-            <button
-              onClick={() => {
-                login(connectors.bscWallet)
-                setProvider('bscWallet')
-                onClose(false)
-              }}
-              className="flex items-center gap-x-2 border-gray-300 border shadow-sm rounded-md w-full justify-center py-1 text-gray-700 hover:bg-gray-50 font-medium"
+    <Modal open={open}>
+      <div className="bg-white px-4 pt-5 sm:p-6 pb-6">
+        <div className="flex justify-between items-center" onClick={() => dispatch(close())}>
+          <h6 className="text-gray-700 font-semibold text-xl">Connect to wallet</h6>
+          <button className="outline-none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
             >
-              <img src={bscSvg} alt="" /> Binance Chain
-            </button>
-            <button
-              onClick={() => {
-                login(connectors.walletConnect)
-                setProvider('walletConnect')
-                onClose(false)
-              }}
-              className="flex items-center gap-x-2 border-gray-300 border shadow-sm rounded-md w-full justify-center py-1 text-gray-700 hover:bg-gray-50 font-medium"
-            >
-              <img src={walletConnectSvg} alt="" /> Wallet Connect
-            </button>
-            <button
-              onClick={() => {
-                login(connectors.injected)
-                setProvider('injected')
-                onClose(false)
-              }}
-              className="flex items-center gap-x-2 border-gray-300 border shadow-sm rounded-md w-full justify-center py-1 text-gray-700 hover:bg-gray-50 font-medium"
-            >
-              <img src={metamaskSvg} alt="" /> Metamask
-            </button>
-          </div>
-        </div>
-        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button
-            type="button"
-            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-            onClick={() => onClose(false)}
-          >
-            Cancel
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
-      </>
+        <div className="flex flex-col gap-y-2 sm:items-start mt-5">
+          {WALLETS.map((wallet) => {
+            return (
+              <button
+                onClick={() => {
+                  login(connectors[wallet.provider])
+                  setProvider(wallet.provider)
+                  dispatch(close())
+                }}
+                key={wallet.name}
+                className="flex items-center justify-between bg-[rgb(239,244,245)] border-none rounded-xl w-full px-8 py-2 text-gray-700 hover:opacity-80 font-medium"
+              >
+                {wallet.name} <img src={wallet.icon} alt="" />
+              </button>
+            )
+          })}
+        </div>
+      </div>
     </Modal>
   )
 }

@@ -19,8 +19,6 @@ const useAuth = () => {
   const login = useCallback(
     (connector) => {
       if (connector) {
-        // connector.handleAccountsChanged = () => localStorage.removeItem('token')
-        console.log(connector)
         activate(connector, async (error: Error) => {
           if (error instanceof UnsupportedChainIdError) {
             const hasSetup = await setupNetwork()
@@ -70,6 +68,7 @@ const useAuth = () => {
     if (window.localStorage.getItem('walletconnect')) {
       connectors.walletConnect.close()
       connectors.walletConnect.walletConnectProvider = null
+      window.localStorage.removeItem('walletconnect')
     }
     window.localStorage.removeItem('provider')
   }, [deactivate])

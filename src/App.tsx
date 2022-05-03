@@ -13,7 +13,7 @@ export const App = () => {
   useEffect(() => {
     const provider = window.localStorage.getItem('provider')
     if (provider) activate(connectors[provider])
-  }, [])
+  }, [activate])
 
   return (
     <Routes>

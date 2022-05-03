@@ -1,7 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import walletModalReducer from 'components/modal/walletModal/walletModalSlice'
+import userReducer from 'pages/homePage/userSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    walletModal: walletModalReducer,
+    user: userReducer,
+  },
 })
 
 export type AppDispatch = typeof store.dispatch

@@ -1,17 +1,18 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { RootState } from 'store/store'
+import { useSelector } from 'react-redux'
 import Header from './header'
 import { WalletModal } from './../modal/walletModal'
 
 export const Layout = () => {
-  const [open, setOpen] = useState<boolean>(false)
+  const open = useSelector((state: RootState) => state.walletModal.open)
   return (
     <div className="bg-app-backgound">
-      <Header onOpen={setOpen} />
+      <Header />
       <div className="p-3">
         <Outlet />
       </div>
-      <WalletModal open={open} onClose={setOpen} />
+      <WalletModal open={open} />
     </div>
   )
 }
