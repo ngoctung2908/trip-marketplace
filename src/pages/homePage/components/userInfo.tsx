@@ -20,7 +20,7 @@ const UserInfo = ({ pid, account }) => {
   return (
     <div className="md:w-1/2 bg-sky-900 rounded p-5">
       <p className="text-white">Your balance: {balance} ONETRIP</p>
-      <p className="text-white">Claimed: 0/5000 ONETRIP</p>
+      <p className="text-white">Claimed: 0/{balance} ONETRIP</p>
     </div>
   )
 }
