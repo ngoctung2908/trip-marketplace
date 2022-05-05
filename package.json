@@ -18,6 +18,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.13",
     "bignumber.js": "^9.0.2",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.28.0",
     "ethers": "^5.6.4",
     "process": "^0.11.10",
@@ -60,7 +61,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.5",
-    "cross-env": "^7.0.3",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.24"
   }
